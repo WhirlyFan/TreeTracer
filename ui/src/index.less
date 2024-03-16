@@ -1,0 +1,40 @@
+/* TODO Add site wide styles */
+
+@size: 2px, 4px, 8px, 16px, 32px, 64px, 128px, 256px, 512px;
+
+.flex(@justify: center, @align: center) {
+    display: flex;
+    justify-content: @justify;
+    align-items: @align;
+  }
+
+  .flex-center {
+    .flex(center, center);
+  }
+
+  .flex-left {
+    .flex(flex-start, center);
+  }
+
+  .flex-right {
+    .flex(flex-end, center);
+  }
+
+@corner-ruleset: {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.max-height-vh {
+  height: 100vh;
+}
+
+.max-height {
+  height: 100%;
+}
+
+.max-width {
+  width: 100%;
+}

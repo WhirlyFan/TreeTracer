@@ -1,0 +1,46 @@
+@import "/src/index.less";
+
+body {
+  margin: 0;
+}
+
+.wrapper {
+    .max-height-vh();
+}
+
+.sider {
+    .max-height-vh();
+    overflow: auto;
+    @corner-ruleset();
+}
+
+.sider > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dropdown {
+    margin: 0 0 5% 5%;
+    width: 90%;
+}
+
+.layout {
+    .max-height();
+    // This fixed value matches size of default sider width
+    margin-left: 200;
+}
+
+.header {
+    background-color: white;
+    padding: 0;
+    height: 4rem;
+}
+
+.content {
+    overflow: initial;
+}
+
+.footer {
+    text-align: center;
+}
