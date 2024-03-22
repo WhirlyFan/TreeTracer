@@ -1,8 +1,5 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
-from .boards import seed_boards, undo_boards
-from .lists import seed_lists, undo_lists
-from .job_apps import seed_job_apps, undo_job_apps
 
 from app.models.db import db, environment, SCHEMA
 
@@ -15,26 +12,17 @@ seed_commands = AppGroup('seed')
 @seed_commands.command('all')
 def seed():
     if environment == 'production':
-        # Before seeding in production, you want to run the seed undo 
-        # command, which will  truncate all tables prefixed with 
+        # Before seeding in production, you want to run the seed undo
+        # command, which will  truncate all tables prefixed with
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         undo_users()
-        undo_boards()
-        undo_lists()
-        undo_job_apps()
     seed_users()
-    seed_boards()
-    seed_lists()
-    seed_job_apps()
     # Add other seed functions here
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
-    undo_job_apps()
-    undo_lists()
-    undo_boards()
     undo_users()
     # Add other undo functions here

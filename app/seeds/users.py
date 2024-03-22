@@ -6,14 +6,8 @@ def seed_users():
     demo = User(username="Demo", email="demo@aa.io", password="password")
     marnie = User(username="Marnie", email="marnie@aa.io", password="password")
     bobbie = User(username="Bobbie", email="bobbie@aa.io", password="password")
-    michael = User(
-        username="Michael1", email="michaellee@gmail.com", password="password"
-    )
-    alexis = User(
-        username="Alexis1", email="alexishwest98@gmail.com", password="password"
-    )
 
-    db.session.add_all([demo, marnie, bobbie, michael, alexis])
+    db.session.add_all([demo, marnie, bobbie])
 
     db.session.commit()
 
