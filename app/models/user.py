@@ -17,9 +17,7 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
     #relationships
-    # examples:
-    # boards = db.relationship('Board', back_populates='user', primaryjoin='User.id==Board.user_id', cascade='all, delete-orphan')
-    # jobpostings= db.relationship('JobPostings', back_populates='postuser', primaryjoin='User.id==JobPostings.user_id', cascade='all, delete-orphan')
+    trees = db.relationship('Tree', back_populates='user', primaryjoin='User.id==Tree.user_id', cascade='all, delete-orphan')
 
     @property
     def password(self):
