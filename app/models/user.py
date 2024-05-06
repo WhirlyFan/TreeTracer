@@ -16,8 +16,10 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+
     #relationships
     trees = db.relationship('Tree', back_populates='user', primaryjoin='User.id==Tree.user_id', cascade='all, delete-orphan')
+    # member = db.relationship('Member', back_populates='user', primaryjoin='User.id==Member.id', cascade='all, delete-orphan')
 
     @property
     def password(self):

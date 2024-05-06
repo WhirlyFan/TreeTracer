@@ -19,33 +19,30 @@ class Tree(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
-    parent_tree_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('trees.id')))
     name = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
     #relationships
-    user = db.relationship('User', back_populates='trees', primaryjoin='User.id==Tree.user_id', cascade='all, delete-orphan')
-    parent_tree = db.relationship('Tree', back_populates='trees', primaryjoin='Tree.parent_tree_id==Tree.id', cascade='all, delete-orphan')
-    members = db.relationship('Member', secondary=tree_member, back_populates='trees', cascade='all, delete-orphan')
+    user = db.relationship('User', back_populates='trees', primaryjoin='User.id==Tree.user_id')
+    members = db.relationship('Member', secondary=tree_member, back_populates='trees')
+
+    def add_members(self, members):
+        for member in members:
+            if member not in self.members:
+                self.members.append(member)
+
+    def remove_members(self, members):
+        for member in members:
+            if member in self.members:
+                self.members.remove(member)
 
     def to_dict(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'parent_tree_id': self.parent_tree_id,
             'name': self.name,
-            'members': [member.to_dict_no_trees() for member in self.members],
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
-        }
-
-    def to_dict_no_members(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'parent_tree_id': self.parent_tree_id,
-            'name': self.name,
+            'members': [member.to_dict() for member in self.members],
             'created_at': self.created_at,
             'updated_at': self.updated_at,
         }
