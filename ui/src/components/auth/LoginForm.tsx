@@ -22,7 +22,7 @@ export default function LoginForm() {
     try {
       await login({ email, password }).unwrap();
       setErrors([]);
-      navigate("/")
+      navigate("/");
     } catch (e) {
       const error = e as ErrorType;
       setErrors(error.data.errors);
@@ -59,7 +59,7 @@ export default function LoginForm() {
         onChange={handlePasswordChange}
       />
       <button type='submit'>Login</button>
-      <button>Signup</button>
+      <button onClick={() => navigate("/signup")}>Signup</button>
     </form>
   );
 }
