@@ -4,12 +4,15 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Flex, Menu } from "antd";
+import { Flex, Menu, Spin } from "antd";
 import { FaLeaf } from "react-icons/fa6";
 import { LuTreeDeciduous } from "react-icons/lu";
 import { GoPeople } from "react-icons/go";
+import { useLogoutMutation } from "app/apiSlice";
 
 export default function Sidebar() {
+  const [logout, status] = useLogoutMutation();
+  console.log(status)
   return (
     <>
       <Flex align='center' justify='center'>
@@ -49,8 +52,9 @@ export default function Sidebar() {
           },
           {
             key: "6",
-            icon: <LogoutOutlined />,
+            icon: status.isLoading ? <Spin /> : <LogoutOutlined />,
             label: "Logout",
+            onClick: logout,
           },
         ]}
       />
