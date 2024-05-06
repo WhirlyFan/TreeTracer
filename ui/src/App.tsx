@@ -1,37 +1,72 @@
-import LoginForm from "components/auth/LoginForm";
+import { useState } from "react";
 import "./App.less";
-import { Link, Route, Routes } from "react-router-dom";
-import HomePage from "components/HomePage";
-import SignupForm from "components/auth/SignupForm";
-import Users from "components/Users";
+import { Button, Flex, Layout } from "antd";
+import Sidebar from "components/Sidebar";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import CustomHeader from "components/Header";
+import MainContent from "components/MainContent";
+
+const { Sider, Header, Content } = Layout;
 
 function App() {
+  const [collapsed, setCollapsed] = useState(false);
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
-          <li>
-            <Link to='/signup'>Signup</Link>
-          </li>
-          <li>
-            <Link to='/users'>Users</Link>
-          </li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path='/login' element={<LoginForm />} />
-        <Route path='/signup' element={<SignupForm />} />
-        <Route path='/users' element={<Users />} />
-        <Route path='/' element={<HomePage />} />
-      </Routes>
+      <Layout>
+        <Sider
+          theme='light'
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          className='sider'
+        >
+          <Sidebar />
+          <Button
+            type='text'
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            className='triger-btn'
+          />
+        </Sider>
+        <Layout>
+          <Header className='header'>
+            <CustomHeader />
+          </Header>
+          <Content className='content'>
+            <Flex gap='large'>
+              <MainContent />
+              {/* <SideContent /> */}
+            </Flex>
+          </Content>
+        </Layout>
+      </Layout>
     </>
   );
 }
 
 export default App;
+
+{
+  /* <nav>
+<ul>
+  <li>
+    <Link to='/'>Home</Link>
+  </li>
+  <li>
+    <Link to='/login'>Login</Link>
+  </li>
+  <li>
+    <Link to='/signup'>Signup</Link>
+  </li>
+  <li>
+    <Link to='/users'>Users</Link>
+  </li>
+</ul>
+</nav>
+<Routes>
+<Route path='/login' element={<LoginForm />} />
+<Route path='/signup' element={<SignupForm />} />
+<Route path='/users' element={<Users />} />
+<Route path='/' element={<HomePage />} />
+</Routes> */
+}
