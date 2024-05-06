@@ -6,6 +6,7 @@ import LoginForm from "components/auth/LoginForm";
 import SignUpForm from "components/auth/SignupForm";
 import Users from "components/Users";
 import HomePage from "components/HomePage";
+import NotFound from "components/NotFound";
 
 function App() {
   const { data, isLoading, isError } = useGetCurrentUserQuery({});
@@ -23,6 +24,7 @@ function App() {
         <Route path='/users' element={<Users />} />
         <Route path='/home' element={<HomePage />} />
         <Route path='/' element={currentUser ? <Dashboard /> : <HomePage />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </>
   );

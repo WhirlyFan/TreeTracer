@@ -1,10 +1,7 @@
-import {
-  MessageOutlined,
-  NotificationOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Avatar, Flex, Typography } from "antd";
+import { MessageOutlined, NotificationOutlined } from "@ant-design/icons";
+import { Flex, Typography } from "antd";
 import Search from "antd/es/input/Search";
+import DropdownAvatar from "./DropdownAvatar";
 
 export default function CustomHeader() {
   return (
@@ -16,9 +13,9 @@ export default function CustomHeader() {
         <Flex align='center' gap='3rem'>
           <Search placeholder='Search Dashboard' allowClear />
           <Flex align='center' gap='10px'>
-            <MessageOutlined className="header-icon" />
-            <NotificationOutlined className="header-icon" />
-            <Avatar icon={<UserOutlined />} />
+            <MessageOutlined className='header-icon' />
+            <NotificationOutlined className='header-icon' />
+            <DropdownAvatar />
           </Flex>
         </Flex>
       </Flex>
