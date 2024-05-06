@@ -42,13 +42,10 @@ class Member(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            # TODO: This needs to be changed so only the direct parent is returned
-            'parents': [parent.to_dict() for parent in self.parents],
             'first_name': self.first_name,
             'last_name': self.last_name,
             'alternate_name': self.alternate_name,
             'picture': self.picture,
-            'tree_ids': [tree.id for tree in self.trees],
             'created_at': self.created_at,
             'updated_at': self.updated_at,
         }

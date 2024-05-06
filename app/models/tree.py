@@ -42,7 +42,6 @@ class Tree(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'name': self.name,
-            'members': [member.to_dict() for member in self.members],
             'created_at': self.created_at,
             'updated_at': self.updated_at,
         }
