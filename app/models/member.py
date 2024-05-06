@@ -38,6 +38,8 @@ class Member(db.Model):
             if parent in self.parents:
                 self.parents.remove(parent)
 
+    def get_parents(self):
+        return self.parents
 
     def to_dict(self):
         return {

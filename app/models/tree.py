@@ -37,6 +37,9 @@ class Tree(db.Model):
             if member in self.members:
                 self.members.remove(member)
 
+    def get_members(self):
+        return self.members
+
     def to_dict(self):
         return {
             'id': self.id,
