@@ -11,6 +11,8 @@ import NotFound from "components/NotFound";
 function App() {
   const { data, isLoading, isError } = useGetCurrentUserQuery({});
 
+  // TODO: Add a loading spinner
+  // <Skeleton active loading={isLoading}/>;
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching user</div>;
 
