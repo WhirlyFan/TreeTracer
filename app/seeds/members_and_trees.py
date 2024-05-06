@@ -46,9 +46,13 @@ def seed_members_and_trees():
 # it will reset the primary keys for you as well.
 def undo_members_and_trees():
     if is_production:
+        db.session.execute(text(f"TRUNCATE table {SCHEMA}.member_parent RESTART IDENTITY CASCADE;"))
+        db.session.execute(text(f"TRUNCATE table {SCHEMA}.tree_member RESTART IDENTITY CASCADE;"))
         db.session.execute(text(f"TRUNCATE table {SCHEMA}.members RESTART IDENTITY CASCADE;"))
         db.session.execute(text(f"TRUNCATE table {SCHEMA}.trees RESTART IDENTITY CASCADE;"))
     else:
+        db.session.execute(text("DELETE FROM member_parent"))
+        db.session.execute(text("DELETE FROM tree_member"))
         db.session.execute(text("DELETE FROM members"))
         db.session.execute(text("DELETE FROM trees"))
 
