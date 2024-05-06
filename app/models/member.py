@@ -8,6 +8,9 @@ member_parent = db.Table(
     db.Column('child_member_id', db.Integer, db.ForeignKey(add_prefix_for_prod('members.id')), primary_key=True)
 )
 
+if is_production:
+    member_parent.schema = SCHEMA
+
 class Member(db.Model):
     __tablename__ = 'members'
 
