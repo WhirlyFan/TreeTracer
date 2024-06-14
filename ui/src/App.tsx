@@ -3,15 +3,14 @@ import { useGetCurrentUserQuery } from "app/apiSlice";
 import { Empty, Layout, Skeleton } from "antd";
 import Navbar from "components/Navbar/Navbar";
 import MainRoutes from "components/Routes/MainRouting";
+import Sidebar from "components/Sidebar/Sidebar";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content } = Layout;
 
 function App() {
   const { data, isLoading, isError } = useGetCurrentUserQuery({});
 
-  // TODO: Add a loading spinner
-  // <Skeleton active loading={isLoading}/>;
-  if (isLoading) return <Skeleton active />;
+  if (isLoading) return <Skeleton loading={isLoading} />;
   if (isError)
     return <Empty description='An error occurred while loading the user' />;
 
@@ -20,9 +19,7 @@ function App() {
   return (
     <>
       <Layout>
-        <Sider>
-          <div className='logo' />
-        </Sider>
+        {currentUser && <Sidebar />}
         <Layout>
           <Header>
             <Navbar />
