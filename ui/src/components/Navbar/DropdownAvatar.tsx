@@ -1,17 +1,51 @@
 import {
+  LoginOutlined,
   LogoutOutlined,
   ProfileOutlined,
   SettingOutlined,
+  UserAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Dropdown, MenuProps, Spin } from "antd";
-import { useLogoutMutation } from "app/apiSlice";
+import { useGetCurrentUserQuery, useLogoutMutation } from "app/apiSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function DropdownAvatar() {
   const [logout, status] = useLogoutMutation();
+  const { data, isLoading: userLoading } = useGetCurrentUserQuery({});
+  const currentUser = data && data.user;
   const navigate = useNavigate();
-  const items: MenuProps["items"] = [
+
+  const loggedOutItems: MenuProps["items"] = [
+    {
+      key: "4",
+      label: (
+        <div
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Login
+        </div>
+      ),
+      icon: <LoginOutlined />,
+    },
+    {
+      key: "5",
+      label: (
+        <div
+          onClick={() => {
+            navigate("/signup");
+          }}
+        >
+          Signup
+        </div>
+      ),
+      icon: <UserAddOutlined />,
+    },
+  ];
+
+  const loggedInItems: MenuProps["items"] = [
     {
       key: "1",
       label: (
@@ -44,8 +78,12 @@ export default function DropdownAvatar() {
       icon: status.isLoading ? <Spin /> : <LogoutOutlined />,
     },
   ];
+
   return (
-    <Dropdown menu={{ items }}>
+    <Dropdown
+      menu={{ items: currentUser ? loggedInItems : loggedOutItems }}
+      disabled={userLoading}
+    >
       <Avatar icon={<UserOutlined />} />
     </Dropdown>
   );

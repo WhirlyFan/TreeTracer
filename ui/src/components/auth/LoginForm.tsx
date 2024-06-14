@@ -1,26 +1,19 @@
+import { Alert, Button, Form, Input } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useLoginMutation } from "app/apiSlice";
-import { ErrorType } from "app/types";
+import { ErrorType, User } from "app/types";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "./auth.less";
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = async () => {
+  const onFinish = async (values: User) => {
     try {
-      await login({ email, password }).unwrap();
+      await login({ email: values.email, password: values.password }).unwrap();
       setErrors([]);
       navigate("/");
     } catch (e) {
@@ -30,36 +23,48 @@ export default function LoginForm() {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleLogin();
-      }}
-    >
-      <h1>Login</h1>
-      <div>
-        {errors?.map((error) => (
-          <div>{error}</div>
-        ))}
-      </div>
-      <label htmlFor='email'>Email</label>
-      <input
-        type='email'
-        id='email'
+    <Form name='login-form' onFinish={onFinish} className='login-form'>
+      <h1 className='login-form-title'>Login</h1>
+      {errors.length > 0 && (
+        <Alert
+          message='Error'
+          description={errors.map((error) => (
+            <div key={error}>{error}</div>
+          ))}
+          type='error'
+          showIcon
+          style={{ marginBottom: 16 }}
+        />
+      )}
+      <Form.Item
         name='email'
-        value={email}
-        onChange={handleEmailChange}
-      />
-      <label htmlFor='password'>Password</label>
-      <input
-        type='password'
-        id='password'
+        rules={[{ required: true, message: "Please input your email!" }]}
+      >
+        <Input
+          prefix={<UserOutlined className='site-form-item-icon' />}
+          type='email'
+          placeholder='Email'
+        />
+      </Form.Item>
+      <Form.Item
         name='password'
-        value={password}
-        onChange={handlePasswordChange}
-      />
-      <button type='submit'>Login</button>
-      <button onClick={() => navigate("/signup")}>Signup</button>
-    </form>
+        rules={[{ required: true, message: "Please input your password!" }]}
+      >
+        <Input
+          prefix={<LockOutlined className='site-form-item-icon' />}
+          type='password'
+          placeholder='Password'
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type='primary' htmlType='submit' className='login-form-button'>
+          Login
+        </Button>
+        Or{" "}
+        <Link to='/signup' className='login-form-register'>
+          Register Now!
+        </Link>
+      </Form.Item>
+    </Form>
   );
 }
