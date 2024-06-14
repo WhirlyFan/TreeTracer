@@ -18,13 +18,13 @@ function App() {
 
   return (
     <>
-      <Layout>
+      <Layout className='app-layout'>
         {currentUser && <Sidebar />}
         <Layout>
           <Header>
             <Navbar />
           </Header>
-          <Content>
+          <Content className='app-content'>
             <MainRoutes currentUser={currentUser} />
           </Content>
         </Layout>
