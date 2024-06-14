@@ -16,6 +16,7 @@ function App() {
 
   const currentUser = data && data.user;
 
+  // TODO: Refreshing page flickers navbar to middle of screen. likely to do with CSS of app-layout not being applied during loading
   return (
     <>
       <Layout className='app-layout'>
